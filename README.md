@@ -17,3 +17,14 @@ Generate article to static html form yaopai api
 
 - return after make: it will return `{"result":{"Success":true}}` always, even if real data is not fetched from api.
 
+## Refers
+
+- [Yaopai api doc](https://xiattst.gitbooks.io/yaopai/content/API/Article/Get.html)
+
+- [Icon package](http://www.iconpng.com/series/1374)
+
+- [npm: EJS](http://www.embeddedjs.com)
+
+- [npm: async waterfall](https://www.npmjs.com/package/async#waterfall)
+
+- [Scrape data from the Web](http://www.codeproject.com/Tips/701689/How-to-scrape-data-from-the-Web-using-Node-js)
