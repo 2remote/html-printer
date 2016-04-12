@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/2remote/html-printer/issues"
   },
-  "homepage": "https://github.com/2remote/html-printer#readme"
+  "homepage": "https://github.com/2remote/html-printer#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
 }
