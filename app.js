@@ -14,7 +14,7 @@ loadEjsView('views/article.ejs', function(err, data){
   template = data;
 });
 
-app.get('/api/show/:id', function(req, res){
+app.get('/api/make-html-by-id/:id', function(req, res){
   var article_id = req.params.id;
   var file = 'www/' + article_id + '.html';
 
