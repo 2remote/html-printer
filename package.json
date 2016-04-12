@@ -24,7 +24,10 @@
   },
   "homepage": "https://github.com/2remote/html-printer#readme",
   "dependencies": {
+    "async": "^2.0.0-rc.3",
     "ejs": "^2.4.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "nimble": "0.0.2",
+    "request": "^2.71.0"
   }
 }
