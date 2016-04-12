@@ -63,7 +63,10 @@ function loadEjsView(file, callback) { // (file -- ejsFileString)
 }
 
 function renderToFile(templateStr, data, callback){ // (templateStr, data -- html) 
-  var html = ejs.render(templateStr, data);
+  var html = ejs.render(templateStr, NotFound);
+  if(data.Success){
+    html = ejs.render(templateStr, data);
+  }
   callback(null, html);
 }
 
