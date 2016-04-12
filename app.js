@@ -10,7 +10,10 @@ app.set('view engine', 'ejs');
 var data = {Title: 'Not found'};
 
 app.get('/api/show/:id', function(req, res){
-  async.waterfall([fetchJson], function(err, result){
+  var article_id = req.params.id;
+  async.waterfall([
+      async.apply(fetchJson, article_id)
+    ], function(err, result){
     result = eval('(' + result + ')');
     res.render('article', result);
   });
@@ -24,8 +27,10 @@ function renderBack(data, res, callback) {
   res.render('article', data);
 }
 
-function fetchJson(callback) {
-  request('http://api.aiyaopai.com/\?api\=Article.Get\&Id\=3\&Fields\=Title', 
+function fetchJson(id, callback) {
+  request('http://api.aiyaopai.com/\?api\=Article.Get\&Id\='
+    + id
+    + '\&Fields\=Title', 
     function(err, res, body){
       if(!err && res.statusCode == 200){
         callback(null, body);
