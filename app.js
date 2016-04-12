@@ -7,15 +7,20 @@ app.use('/', express.static(__dirname + '/www'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-var data = {Title: 'Not found'};
+var NotFound = {Title: 'Not found'};
 
 app.get('/api/show/:id', function(req, res){
   var article_id = req.params.id;
   async.waterfall([
       async.apply(fetchJson, article_id)
-    ], function(err, result){
+    ], 
+  function(err, result){
     result = eval('(' + result + ')');
-    res.render('article', result);
+    if (result.Success){
+      res.render('article', result);
+    }else{
+      res.render('article', NotFound);
+    }
   });
 });
 
@@ -33,6 +38,7 @@ function fetchJson(id, callback) {
     + '\&Fields\=Title', 
     function(err, res, body){
       if(!err && res.statusCode == 200){
+        console.log(body);
         callback(null, body);
       }
     }
