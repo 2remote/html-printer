@@ -28,10 +28,6 @@ var port = 6000;
 app.listen(port);
 console.log('Server running at http://127.0.0.1:%s.', port);
 
-function renderBack(data, res, callback) {
-  res.render('article', data);
-}
-
 function fetchJson(id, callback) {
   request('http://api.aiyaopai.com/\?api\=Article.Get\&Id\='
     + id
