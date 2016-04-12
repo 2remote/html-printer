@@ -7,7 +7,7 @@ var fs = require('fs');
 var app = express();
 app.use('/', express.static(__dirname + '/www'));
 
-var NotFound = {Title: 'Not found', Content: 'Empty', Cover: '#'};
+var NotFound = {Title: '文章没有找到！', Content: '抱歉，您需要的文章没有找到。', Cover: 'img/notfound.png'};
 
 var template = '';
 loadEjsView('views/article.ejs', function(err, data){
