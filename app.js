@@ -6,10 +6,8 @@ var fs = require('fs');
 
 var app = express();
 app.use('/', express.static(__dirname + '/www'));
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
 
-var NotFound = {Title: 'Not found'};
+var NotFound = {Title: 'Not found', Content: 'Empty', Cover: '#'};
 
 var template = '';
 loadEjsView('views/article.ejs', function(err, data){
@@ -36,15 +34,14 @@ var port = 6000;
 app.listen(port);
 console.log('Server running at http://127.0.0.1:%s.', port);
 
-function fetchJson(id, callback) { // (id -- body)
+function fetchJson(id, callback) { // (id -- data)
   request('http://dev.api.aiyaopai.com/\?api\=Article.Get\&Id\='
     + id
-    + '\&Fields\=Title', 
+    + '\&Fields\=Title,Content,Cover', 
     function(err, res, body){
       if(!err && res.statusCode == 200){
-        console.log(body);
-        result = eval('(' + body + ')');
-        callback(null, result);
+        data = JSON.parse(body);
+        callback(null, data);
       }
     }
   );
@@ -63,6 +60,7 @@ function loadEjsView(file, callback) { // (file -- ejsFileString)
 }
 
 function renderToFile(templateStr, data, callback){ // (templateStr, data -- html) 
+  console.log(data);
   var html = ejs.render(templateStr, NotFound);
   if(data.Success){
     html = ejs.render(templateStr, data);
@@ -74,7 +72,7 @@ function saveFile(file, string, callback) { // (file, string -- )
   fs.writeFile(file, string, function(err){
     if(err) throw err;
     console.log('The %s was saved!', file);
+    callback(null, {Success: true});
   });
-  callback(null, {Success: true});
 }
 
