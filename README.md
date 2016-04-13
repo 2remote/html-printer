@@ -3,9 +3,9 @@ Generate article to static html form yaopai api
 
 ## usage
 
-- make: use ajax to `http://localhost:6000/api/make-html-by-id/5`  will build article(id=5) to html.
+- make: use ajax to `http://localhost:8080/api/make-html-by-id/5`  will build article(id=5) to html.
 
-- view: view `http://localhost:6000/5.html` after make.
+- view: view `http://localhost:8080/5.html` after make.
 
 - update: same as make.
 
@@ -28,3 +28,4 @@ Generate article to static html form yaopai api
 - [npm: async waterfall](https://www.npmjs.com/package/async#waterfall)
 
 - [Scrape data from the Web](http://www.codeproject.com/Tips/701689/How-to-scrape-data-from-the-Web-using-Node-js)
+
