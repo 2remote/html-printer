@@ -1,4 +1,4 @@
-image: daocloud/ci-node:0.8
+image: daocloud/ci-node:0.12
 
 env:
     - MONGODB_INSTANCE_NAME = "test"
