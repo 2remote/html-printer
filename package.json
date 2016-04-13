@@ -4,6 +4,7 @@
   "description": "Generate article to static html form yaopai api",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "exit 0"
   },
   "repository": {
