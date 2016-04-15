@@ -35,9 +35,9 @@ app.listen(port);
 console.log('Server running at http://127.0.0.1:%s.', port);
 
 function fetchJson(id, callback) { // (id -- data)
-  request('http://dev.api.aiyaopai.com/\?api\=Article.Get\&Id\='
-    + id
-    + '\&Fields\=Title,Content,Cover', 
+  request('http://dev.api.aiyaopai.com/\?api\=Article.Get\&Id\=' + 
+   id + 
+   '\&Fields\=Title,Content,Cover', 
     function(err, res, body){
       if(!err && res.statusCode == 200){
         data = JSON.parse(body);
@@ -54,9 +54,9 @@ function loadEjsView(file, callback) { // (file -- ejsFileString)
         if (err) throw err;
         var ejsFileString = data.toString();
         callback(null, ejsFileString);
-      })
+      });
     }
-  })
+  });
 }
 
 function renderToFile(templateStr, data, callback){ // (templateStr, data -- html) 
