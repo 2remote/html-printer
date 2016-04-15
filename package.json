@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "exit 0"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,10 @@
     "express": "^4.13.4",
     "nimble": "0.0.2",
     "request": "^2.71.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-tape": "0.0.2"
   }
 }
