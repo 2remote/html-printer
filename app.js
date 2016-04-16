@@ -29,8 +29,10 @@ app.get('/api/make-html-by-id/:id', function(req, res){
   });
 
   // update init article list and save
-  filesNeedInit.push(article_id);
-  common.saveJSON(filesNeedInit, article_list);
+  if ( filesNeedInit.indexOf(article_id) == -1 ) {
+    filesNeedInit.push(article_id);
+    common.saveJSON(filesNeedInit, article_list);
+  }
 
 });
 
