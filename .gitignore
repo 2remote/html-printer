@@ -1,3 +1,5 @@
 node_modules/
 www/*.html
 *.swp
+
+www/files.json
