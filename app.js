@@ -1,3 +1,4 @@
+var common = require('./lib/common');
 var express = require('express');
 var request = require('request');
 var async = require('async');
@@ -14,6 +15,15 @@ loadEjsView('views/article.ejs', function(err, data){
   template = data;
 });
 
+// init generate static files by www/files.json
+var filesNeedInit = common.readJSON('./www/files.json');
+filesNeedInit.forEach(function(id){
+  generateStaticHtml(id, function(err, data){
+    console.log(data);
+  });
+});
+
+// generate/update file route
 app.get('/api/make-html-by-id/:id', function(req, res){
   var article_id = req.params.id;
   var file = 'www/' + article_id + '.html';
@@ -33,6 +43,25 @@ app.get('/api/make-html-by-id/:id', function(req, res){
 var port = 8080;
 app.listen(port);
 console.log('Server running at http://127.0.0.1:%s.', port);
+
+
+// Functions
+//
+
+function generateStaticHtml(id, callback) { // ( id -- static file)
+  var file = 'www/' + id + '.html';
+
+  async.waterfall([
+      async.apply(fetchJson, id),
+      async.apply(renderToFile, template),
+      async.apply(saveFile, file)
+    ],
+    function(err, result){
+      console.log(result);
+      callback(null, {result: result});
+    }
+  );
+}
 
 function fetchJson(id, callback) { // (id -- data)
   request('http://api.aiyaopai.com/\?api\=Article.Get\&Id\=' + 
