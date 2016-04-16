@@ -26,18 +26,9 @@ filesNeedInit.forEach(function(id){
 // generate/update file route
 app.get('/api/make-html-by-id/:id', function(req, res){
   var article_id = req.params.id;
-  var file = 'www/' + article_id + '.html';
-
-  async.waterfall([
-      async.apply(fetchJson, article_id),
-      async.apply(renderToFile, template),
-      async.apply(saveFile, file)
-    ], 
-    function(err, result){
-      console.log(result);
-      res.json({result: result});
-    }
-  );
+  generateStaticHtml(article_id, function(err, data){
+    res.json(data);
+  });
 });
 
 var port = 8080;
