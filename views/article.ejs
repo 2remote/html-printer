@@ -1,11 +1,24 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-itunes-app" content="app-id=490217893">
     <title><%= Title %></title>
+    <style>
+      .ariticle,
+      .ariticle p img{
+        max-width: 100%;
+        overflow-x: hidden;
+        margin: auto 10px;
+      }
+    </style>
   </head>
   <body>
-    <h1><%= Title %></h1>
-    <img src="<%= Cover %>"/> 
-    <div><%- Content %></div>
+    <div style="margin:56px 20% 0 11%;">
+      <span style="color:green;float:left;font-size:2em;margin-right: 3px;" >-</span>
+      <h1><%= Title %></h1>
+    </div>
+    <!-- <img src="<%= Cover %>"/> -->
+    <div class="ariticle"><%- Content %></div>
   </body>
 </html>
