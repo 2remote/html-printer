@@ -35,7 +35,7 @@ app.listen(port);
 console.log('Server running at http://127.0.0.1:%s.', port);
 
 function fetchJson(id, callback) { // (id -- data)
-  request('http://dev.api.aiyaopai.com/\?api\=Article.Get\&Id\=' + 
+  request('http://api.aiyaopai.com/\?api\=Article.Get\&Id\=' + 
    id + 
    '\&Fields\=Title,Content,Cover', 
     function(err, res, body){
