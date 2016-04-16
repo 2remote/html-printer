@@ -10,19 +10,15 @@ app.use('/', express.static(__dirname + '/www'));
 
 var NotFound = {Title: '文章没有找到！', Content: '抱歉，您需要的文章没有找到。', Cover: 'img/notfound.png'};
 
+
 var template = '';
-loadEjsView('views/article.ejs', function(err, data){
-  template = data;
-});
-
 var article_list = './www/files.json';
-
 // init generate static files by www/files.json
 var filesNeedInit = common.readJSON(article_list);
-filesNeedInit.forEach(function(id){
-  generateStaticHtml(id, function(err, data){
-    console.log(data);
-  });
+
+loadEjsView('views/article.ejs', function(err, data){
+  template = data;
+  initStaticHtml();
 });
 
 // generate/update file route
@@ -45,6 +41,24 @@ console.log('Server running at http://127.0.0.1:%s.', port);
 
 // Functions
 //
+
+function initStaticHtml(){  // generate static html from www/files.json
+  var generatorTasks = [];
+
+  filesNeedInit.forEach(function(id){
+    generatorTasks.push(makeStaticHtmlGenerator(id));
+  });
+
+  async.parallel(generatorTasks);
+}
+
+function makeStaticHtmlGenerator(id, res) { // ( id, res -- generateStaticHtml(id) )
+  return function(){
+    generateStaticHtml(id, function(err, result){
+      console.log(result);
+    });
+  };
+}
 
 function generateStaticHtml(id, callback) { // ( id -- static file)
   var file = 'www/' + id + '.html';
@@ -87,7 +101,6 @@ function loadEjsView(file, callback) { // (file -- ejsFileString)
 }
 
 function renderToFile(templateStr, data, callback){ // (templateStr, data -- html) 
-  console.log(data);
   var html = ejs.render(templateStr, NotFound);
   if(data.Success){
     html = ejs.render(templateStr, data);
@@ -98,7 +111,7 @@ function renderToFile(templateStr, data, callback){ // (templateStr, data -- htm
 function saveFile(file, string, callback) { // (file, string -- )
   fs.writeFile(file, string, function(err){
     if(err) throw err;
-    console.log('The %s was saved!', file);
+    console.log('The %s was saved with %d chars.', file, string.length);
     callback(null, {Success: true});
   });
 }
