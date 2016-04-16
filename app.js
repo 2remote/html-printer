@@ -15,8 +15,10 @@ loadEjsView('views/article.ejs', function(err, data){
   template = data;
 });
 
+var article_list = './www/files.json';
+
 // init generate static files by www/files.json
-var filesNeedInit = common.readJSON('./www/files.json');
+var filesNeedInit = common.readJSON(article_list);
 filesNeedInit.forEach(function(id){
   generateStaticHtml(id, function(err, data){
     console.log(data);
@@ -29,6 +31,11 @@ app.get('/api/make-html-by-id/:id', function(req, res){
   generateStaticHtml(article_id, function(err, data){
     res.json(data);
   });
+
+  // update init article list and save
+  filesNeedInit.push(article_id);
+  common.saveJSON(filesNeedInit, article_list);
+
 });
 
 var port = 8080;
