@@ -6,5 +6,5 @@ test('read demo.json into array', function(t) {
   var current_path = common.getFilePath('./www/files.json');
   t.equal(true, current_path.indexOf('files.json') >= 0);
   var data = common.readJSON('./www/files.json');
-  t.equal(3, data.files.length);
+  t.equal(3, data.length);
 });
