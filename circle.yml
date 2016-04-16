@@ -4,4 +4,4 @@ machine:
 dependencies:
   pre:
     - npm install -g grunt-cli
-    - npm install
+    - npm install --dev
