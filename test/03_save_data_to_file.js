@@ -3,7 +3,7 @@ var test = require('tape');
 var common = require('../lib/common');
 
 test('save data to file', function(t){
-  var data = [1, 2, 3, 4];
+  var data = ["1", "2", "3", "4", "5"];
   var file = './test/files.json';
   var filepath = common.getFilePath(file);
 
@@ -13,7 +13,7 @@ test('save data to file', function(t){
     if(exists) {
       t.equal(true, true); // file exists
       var data = common.readJSON(file);
-      t.equal(4, data.length);
+      t.equal(data.length, 5);
     }
   });
 });
