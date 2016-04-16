@@ -4,4 +4,4 @@ machine:
 dependencies:
   override:
     - npm install -g grunt-cli
-    - npm install --dev
+    - npm install 
