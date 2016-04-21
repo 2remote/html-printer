@@ -1,3 +1,4 @@
+var justwait = require('./lib/middleware/justwait');
 var common = require('./lib/common');
 var express = require('express');
 var request = require('request');
@@ -7,6 +8,7 @@ var fs = require('fs');
 
 var app = express();
 app.use('/', express.static(__dirname + '/www'));
+app.use(justwait);
 
 var NotFound = {Title: '文章没有找到！', Content: '抱歉，您需要的文章没有找到。', Cover: 'img/notfound.png'};
 
