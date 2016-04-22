@@ -12,17 +12,20 @@
         margin: auto 10px;
       }
       #scrollBar {
+        position: fixed;
+        left: 0;
+        top: 0;
         width: 100%;
         height: 219px;
-        /*display: none;*/
-        background: url('scroll_msg.png') no-repeat;
+        display: none;
+        background: red url('scroll_msg.png') no-repeat;
         background-size:100% 100%;
       }
     </style>
   </head>
   <body>
     <div id="scrollBar"></div>
-    <a href="https://itunes.apple.com/cn/app/idxxxxxx" id=openApp>打开App</a>
+    <a href="https://itunes.apple.com/cn/app/id490217893" id=openApp>打开App</a>
     <div style="margin:56px 20% 0 11%;">
       <span style="color:green;float:left;font-size:2em;margin-right: 3px;" >-</span>
       <h1><%= Title %></h1>
