@@ -22,8 +22,8 @@
   </head>
   <body>
     <div id="scrollBar"></div>
+    <a href="https://itunes.apple.com/cn/app/idxxxxxx" id=openApp>打开App</a>
     <div style="margin:56px 20% 0 11%;">
-      <button id="openApp">用 App 打开</button>
       <span style="color:green;float:left;font-size:2em;margin-right: 3px;" >-</span>
       <h1><%= Title %></h1>
     </div>
@@ -31,20 +31,27 @@
     <div class="ariticle"><%- Content %></div>
 <script src="//cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script>
-$("#openApp").click(function() {
+if (browser.versions.mobile && browser.versions.android) {//如果是安卓设备
+  $('#openApp')[0].href = 'http://m.aiyaopai.com/'
+}
+
+$('#openApp').click(function() {
   if (browser.versions.mobile) {//判断是否是移动设备打开
-    console.log('是手机');
-    if(browser.versions.android){ //是否安卓上打开
-      console.log('是安卓');
-      window.location="http://m.aiyaopai.com/";
-      return
-    }
     var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
     // 在设备是苹果 且 用微信打开
-    if (browser.versions.ios && ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
+    if (browser.versions.ios && ua.match(/MicroMessenger/i) == "micromessenger") {
       $("#scrollBar").slideDown("slow");
+      return false;
     } else if (browser.versions.ios) {
-      //
+      //通过 iframe 方式试图打开App，如果能正常打开，会直接切换到App，并阻止 a 标签默认行为
+      //否则打开 a 标签的 href 链接
+      var ifr = document.createElement('iframe');
+      ifr.src = 'com.zttd.wenApp//'; //需要提供 App 的 URL Types
+      ifr.style.display = 'none';
+      docuemnt.body.appendChild(ifr);
+      window.setTimeout(function() {
+        document.body.removeChild(ifr);
+      },3000)
     }
   }
 })
