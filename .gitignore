@@ -1,5 +1,10 @@
 node_modules/
 www/*.html
 *.swp
-
 www/files.json
+*.log
+.DS_Store
+build
+.idea
+*.sublime-project
+*.sublime-workspace
