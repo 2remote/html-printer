@@ -90,6 +90,7 @@
     }
 
     #openApp {
+      display: none;
       width: 50px;
       height: 30px;
       position: fixed;
@@ -144,7 +145,7 @@
         webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
         gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
         mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        iOS: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
         android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
         iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
         iPad: u.indexOf('iPad') > -1, //是否iPad
@@ -154,44 +155,36 @@
     language: (navigator.browserLanguage || navigator.language).toLowerCase()
   }
 
-  if (browser.versions.mobile && browser.versions.android) { //如果是安卓设备
-    $('#openApp').hide();
+  var ua = navigator.userAgent.toLowerCase(); //获取判断用的对象
+
+  /**
+   * 设备判断
+   * browser.versions.mobile 是否移动端
+   * browser.versions.ios    是否 ios 设备
+   * ua.match(/MicroMessenger/i) == "micromessenger" 是否在微信里
+   */
+
+  if (browser.versions.mobile && browser.versions.iOS && ua.match(/MicroMessenger/i) == "micromessenger")
+    $('#openApp').show();
+                 .click(function() {
+                   var winHeight = $(window).height() + 'px';
+                   $('body').css({
+                     height: winHeight,
+                     overflow: 'hidden'
+                   });
+                   $('#mask').show().addClass('fade_toggle');
+                   $('#menu').addClass('actionsheet_toggle');
+                 }
+
+   $('#mask').click(function() {
+     $('#mask').removeClass('fade_toggle').hide();
+     $('#menu').removeClass('actionsheet_toggle');
+     $('body').css({
+       height: '100%',
+       overflow: 'visible'
+     });
+   });
   }
-
-  $('#openApp').click(function() {
-    if (browser.versions.mobile) { //判断是否是移动设备打开
-      var ua = navigator.userAgent.toLowerCase(); //获取判断用的对象
-      // 在设备是苹果 且 用微信打开
-      if (browser.versions.ios && ua.match(/MicroMessenger/i) == "micromessenger") {
-        var winHeight = $(window).height() + 'px';
-        $('body').css({
-          height: winHeight,
-          overflow: 'hidden'
-        });
-        $('#mask').show().addClass('fade_toggle');
-        $('#menu').addClass('actionsheet_toggle');
-      } else if (browser.versions.ios) {
-        //通过 iframe 方式试图打开App，如果能正常打开，会直接切换到App，并阻止 a 标签默认行为
-        //否则打开 a 标签的 href 链接
-        var ifr = document.createElement('iframe');
-        ifr.src = 'https://itunes.apple.com/us/app/yaopai/id1105711466?l=zh&ls=1&mt=8';
-        ifr.style.display = 'none';
-        $('body').append(ifr);
-        window.setTimeout(function() {
-          document.body.removeChild(ifr);
-        }, 3000)
-      }
-    }
-  })
-
-  $('#mask').click(function() {
-    $('#mask').removeClass('fade_toggle').hide();
-    $('#menu').removeClass('actionsheet_toggle');
-    $('body').css({
-      height: '100%',
-      overflow: 'visible'
-    });
-  });
 </script>
 
 </html>
