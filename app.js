@@ -25,6 +25,7 @@ loadEjsView('views/article.ejs', function(err, data){
 app.get('/api/make-html-by-id/:id', function(req, res){
   var article_id = req.params.id;
   generateStaticHtml(article_id, function(err, data){
+    refreshCdn()
     res.json(data);
   });
 
@@ -52,6 +53,7 @@ function initStaticHtml(){  // generate static html from www/files.json
   });
 
   async.parallel(generatorTasks);
+  refreshCdn()
 }
 
 function makeStaticHtmlGenerator(id, res) { // ( id, res -- generateStaticHtml(id) )
@@ -118,3 +120,36 @@ function saveFile(file, string, callback) { // (file, string -- )
   });
 }
 
+function refreshCdn(){
+  /**
+   * 如果环境变量存在qcloud 的SecretId 和 SecretKey 就认为需要刷新CDN
+   * 环境变量需要:
+   * QCLOUD_SECRETID : SecretId
+   * QCLOUD_SECRETKEY : SecretKey
+   * CDNURL : 需要刷新的Url或目录
+   */
+  var secretId = process.env.QCLOUD_SECRETID;
+  var secretKey = process.env.QCLOUD_SECRETKEY;
+  var cdnurl = process.env.CDNURL;
+
+  if(secretId && secretKey && cdnurl){
+    var QcloudApi = require('./QcloudApi')
+    var qcloud = new QcloudApi({
+      SecretId: secretId,
+      SecretKey: secretKey,
+      method: 'GET',
+      serviceType:'cdn',
+    })
+    var params = {
+      Region: 'gz',
+      Action: 'RefreshCdnDir',
+    };
+    var cdnurls = cdnurl.split(',');
+    cdnurls.forEach(function (item,index) {
+      params['dirs.'+ index] = item;
+    })
+    qcloud.request(params, function(error, data) {
+      console.log('Qcloud RefreshCdn result : ' + data);
+    })
+  }
+}
