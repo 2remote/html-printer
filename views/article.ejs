@@ -165,8 +165,7 @@
    */
 
   if (browser.versions.mobile && browser.versions.iOS && ua.match(/MicroMessenger/i) == "micromessenger")
-    $('#openApp').show();
-                 .click(function() {
+    $('#openApp').show().click(function() {
                    var winHeight = $(window).height() + 'px';
                    $('body').css({
                      height: winHeight,
